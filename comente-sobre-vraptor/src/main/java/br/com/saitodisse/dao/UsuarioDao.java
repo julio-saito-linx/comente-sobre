@@ -1,5 +1,7 @@
 package br.com.saitodisse.dao;
 
+import java.util.List;
+
 import br.com.saitodisse.model.Usuario;
 
 /**
@@ -8,11 +10,7 @@ import br.com.saitodisse.model.Usuario;
  * @author Lucas Cavalcanti
  */
 public interface UsuarioDao {
-
-	/**
-	 * Add a new usuario to the database.
-	 *
-	 * @param usuario
-	 */
-	void add(Usuario usuario);
+	void salvar(Usuario usuario);
+	Usuario pesquisar(long id);
+	List<Usuario> pesquisarTodos();
 }
