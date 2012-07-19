@@ -45,6 +45,14 @@ public class UsuarioDaoTest {
 		assertEquals("Mario", usuarioMario.getNome());
 	}
 
+	@Test
+	public void pesquisarPorNomeInexistenteRetornaNull() throws Exception {
+		dao.salvar(new Usuario("Mario"));
+		dao.salvar(new Usuario("Luis"));
+		dao.salvar(new Usuario("Antonio"));
+		assertNull(dao.pesquisarPorNome("Evandro"));
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		Configuration cfg = new Configuration();

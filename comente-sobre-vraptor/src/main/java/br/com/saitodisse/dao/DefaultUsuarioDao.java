@@ -30,4 +30,11 @@ public class DefaultUsuarioDao implements UsuarioDao {
 	    Query queryResult = session.createQuery("from Usuario");
 	    return queryResult.list();
 	}
+
+	public Usuario pesquisarPorNome(String nome) {
+		String hqlQuery = "from Usuario usu where usu.nome = :nome";
+		Query queryResult = session.createQuery(hqlQuery);
+		queryResult.setParameter("nome",nome);
+	    return (Usuario) queryResult.uniqueResult();
+	}
 }

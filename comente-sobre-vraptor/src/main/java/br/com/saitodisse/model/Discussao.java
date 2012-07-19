@@ -1,6 +1,8 @@
 package br.com.saitodisse.model;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 /*	
@@ -10,16 +12,18 @@ import javax.persistence.*;
  * e pode possui varias mensagens secundárias, as respostas
  * 
  * */
+@Entity
 public class Discussao {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
 	
+	@OneToOne
 	private Mensagem pergunta;
 	
 	@OneToMany
-	private ArrayList<Mensagem> respostas;
+	private List<Mensagem> respostas;
 
 	
 	public Long getId() {
@@ -36,7 +40,7 @@ public class Discussao {
 		this.pergunta = pergunta;
 	}
 	
-	public ArrayList<Mensagem> getRespostas() {
+	public List<Mensagem> getRespostas() {
 		return respostas;
 	}
 	public void addResposta(Mensagem resposta) {

@@ -2,8 +2,12 @@ package br.com.saitodisse.model;
 
 import java.util.Calendar;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import org.springframework.context.annotation.DependsOn;
 
 import br.com.saitodisse.model.exceptions.MensagemInvalidaException;
 
@@ -13,11 +17,13 @@ import br.com.saitodisse.model.exceptions.MensagemInvalidaException;
  * Uma mensagem sempre está associada a um usuário
  * 
  * */
+@Entity
 public class Mensagem {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
+	@OneToOne
 	private Usuario usuario;
 	
 	private Calendar data;
