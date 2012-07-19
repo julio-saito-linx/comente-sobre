@@ -1,4 +1,4 @@
 saitodisse-java
 ===============
 
-my java repositories
+Java, hibernate, vRaptor and HSQLDB
