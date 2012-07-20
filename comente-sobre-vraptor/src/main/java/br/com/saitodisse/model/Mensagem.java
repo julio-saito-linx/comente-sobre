@@ -1,13 +1,11 @@
 package br.com.saitodisse.model;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-
-import org.springframework.context.annotation.DependsOn;
 
 import br.com.saitodisse.model.exceptions.MensagemInvalidaException;
 
@@ -19,6 +17,10 @@ import br.com.saitodisse.model.exceptions.MensagemInvalidaException;
  * */
 @Entity
 public class Mensagem {
+	public Mensagem() {
+		this.data = new Date();
+	}
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -26,7 +28,7 @@ public class Mensagem {
 	@OneToOne
 	private Usuario usuario;
 	
-	private Calendar data;
+	private Date data;
 	
 	private String texto;
 
@@ -54,13 +56,6 @@ public class Mensagem {
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public Calendar getData() {
-		return data;
-	}
-	public void setData(Calendar data) {
-		this.data = data;
 	}
 
 	public String getTexto() {
@@ -100,4 +95,7 @@ public class Mensagem {
 		return true;
 	}
 
+	public Date getData() {
+		return data;
+	}
 }

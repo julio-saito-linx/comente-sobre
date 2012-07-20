@@ -3,7 +3,14 @@ package br.com.saitodisse.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Cascade;
 
 /*	
  * entidade Discussao
@@ -15,16 +22,19 @@ import javax.persistence.*;
 @Entity
 public class Discussao {
 	
+	public Discussao() {
+		this.respostas = new ArrayList<Mensagem>();
+	}
+	
 	@Id
 	@GeneratedValue
 	private Long id;
 	
-	@OneToOne
+	@OneToOne (cascade = {CascadeType.ALL})
 	private Mensagem pergunta;
 	
-	@OneToMany
+	@OneToMany (cascade = {CascadeType.ALL})
 	private List<Mensagem> respostas;
-
 	
 	public Long getId() {
 		return id;

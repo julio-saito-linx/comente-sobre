@@ -5,8 +5,10 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import br.com.caelum.vraptor.ioc.Component;
 import br.com.saitodisse.model.Mensagem;
 
+@Component
 public class DefaultMensagemDao implements MensagemDao {
 
 	private final Session session;

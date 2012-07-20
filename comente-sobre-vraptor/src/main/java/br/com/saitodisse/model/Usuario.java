@@ -15,6 +15,9 @@ import br.com.saitodisse.model.exceptions.NomeUsuarioInvalidoException;
  * */
 @Entity
 public class Usuario {
+	public Usuario() {
+	}
+	
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -22,7 +25,7 @@ public class Usuario {
 	private String nome;
 	
 	public Usuario(String nome) throws NomeUsuarioInvalidoException {
-		if(nome.length() == 0){
+		if(nome == null || nome.isEmpty()){
 			throw new NomeUsuarioInvalidoException("O nome do usuário não pode ser vazio.");
 		}
 		

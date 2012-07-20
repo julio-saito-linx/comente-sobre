@@ -4,14 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Index</title>
+<title>Criar nova pergunta</title>
 </head>
 <body>
-	<h1>Logon</h1>
-	<h2>Usuário:</h2>
+	<h1>Nova pergunta</h1>
 	<form method="post">
-		<input name="nome">
-		<input type="submit" value="Entrar">
+		Pergunta:
+		<input name="pergunta">
+		<input type="submit" value="Criar">
 	</form>
 </body>
 </html>
