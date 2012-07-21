@@ -1,8 +1,9 @@
 <%@ include file="/header.jsp" %> 
 
 
-	<h1>Logon</h1>
-	<h2>Usuário:</h2>
+	<h1>LOGON</h1>
+	<br />
+	<h3>Usuário:</h3>
 	<form method="post">
 		<input name="nome">
 		<input type="submit" value="Entrar">

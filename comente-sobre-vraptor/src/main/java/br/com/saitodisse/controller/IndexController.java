@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Result;
 import br.com.saitodisse.dao.DefaultUsuarioDao;
 import br.com.saitodisse.model.Usuario;
 import br.com.saitodisse.model.UsuarioLogado;
+import br.com.saitodisse.model.exceptions.NomeUsuarioInvalidoException;
 
 @Resource
 public class IndexController {
@@ -33,15 +34,18 @@ public class IndexController {
 
 	@Post
 	@Path("/")
-	public void index(String nome) {
+	public void index(String nome) throws NomeUsuarioInvalidoException {
 		Usuario usuario = _defaultUsuarioDao.pesquisarPorNome(nome);
 		if(usuario != null){
 			_usuarioLogado.setUsuario(usuario);
 			_result.use(page()).of(IndexController.class).bemVindo();
-			return;
 		}
 		else{
-			_result.redirectTo(UsuarioController.class).novo();
+			// cria o novo usuário
+			usuario = new Usuario(nome);
+			_defaultUsuarioDao.salvar(usuario);
+			_usuarioLogado.setUsuario(usuario);
+			_result.redirectTo(IndexController.class).bemVindo();
 		}
 	}
 
