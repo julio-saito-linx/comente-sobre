@@ -1,4 +1,4 @@
-<%@ include file="/header.jsp" %> 
+﻿<%@ include file="/header.jsp" %> 
 
 
 	<h1>lista de conversas</h1>
@@ -14,6 +14,6 @@
 		</c:forEach>
 	</table>
 
-	<a href="<c:url value="/discussao/novaPergunta"/>">criar nova discuss�o</a>
+	<a href="<c:url value="/discussao/novaPergunta"/>">criar nova discussão</a>
 
 <%@ include file="/footer.jsp" %>

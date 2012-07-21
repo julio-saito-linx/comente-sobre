@@ -1,4 +1,4 @@
-<%@ include file="/header.jsp" %> 
+﻿<%@ include file="/header.jsp" %> 
 
 
 	<table class="table">
@@ -10,6 +10,6 @@
 		</c:forEach>
 	</table>
 
-<a href="<c:url value="/usuario/novo"/>">novo usu�rio</a>
+<a href="<c:url value="/usuario/novo"/>">novo usuário</a>
 
 <%@ include file="/footer.jsp" %>

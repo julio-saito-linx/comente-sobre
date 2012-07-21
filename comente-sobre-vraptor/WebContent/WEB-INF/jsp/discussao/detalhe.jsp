@@ -1,7 +1,7 @@
-<%@ include file="/header.jsp" %> 
+﻿<%@ include file="/header.jsp" %> 
 
 
-	<h2>Discuss�o</h2>
+	<h2>Discussão</h2>
 	<h3>${discussao.pergunta.texto }</h3>
 	<h4>${discussao.pergunta.usuario.nome }</h4>
 	<br />

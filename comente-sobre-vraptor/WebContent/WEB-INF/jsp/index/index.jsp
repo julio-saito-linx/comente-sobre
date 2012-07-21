@@ -1,9 +1,9 @@
-<%@ include file="/header.jsp" %> 
+﻿<%@ include file="/header.jsp" %> 
 
 
 	<h1>LOGON</h1>
 	<br />
-	<h3>Usu�rio:</h3>
+	<h3>Usuário:</h3>
 	<form method="post">
 		<input name="nome">
 		<input type="submit" value="Entrar">

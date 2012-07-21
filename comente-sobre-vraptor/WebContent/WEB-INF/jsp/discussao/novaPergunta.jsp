@@ -1,7 +1,7 @@
-<%@ include file="/header.jsp"%>
+﻿<%@ include file="/header.jsp"%>
 
 
-<h1>Criar nova discuss�o</h1>
+<h1>Criar nova discussão</h1>
 <br />
 <h3>Sobre o que quer conversar?</h3>
 <br />
