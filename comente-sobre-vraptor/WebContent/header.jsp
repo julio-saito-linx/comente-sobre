@@ -13,6 +13,8 @@
 
     <!-- Le styles -->
     <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet">
+    <link href="<c:url value="/css/bootstrap-responsive.css"/>" rel="stylesheet">
+    <link href="<c:url value="/css/site.css"/>" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -33,11 +35,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="<c:url value="/discussao/ultimas"/>">comente-sobre</a>
+          <a class="brand" href="<c:url value="/"/>">comente-sobre</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li>               <a href="<c:url value="/usuario"/>">Usuários</a></li>
-              <li>               <a href="<c:url value="/index/logout"/>">Sair</a></li>
+              <li>               <a href="<c:url value="/usuario/logout"/>">Sair</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

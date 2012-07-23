@@ -1,25 +1,51 @@
-﻿<%@ include file="/header.jsp" %> 
+<%@ include file="/header.jsp"%>
 
+<div class="row">
+	<div class="span12">
+		<h3>${discussao.pergunta.titulo }</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="span12">
+		<h4>${discussao.pergunta.texto }</h4>
+	</div>
+</div>
+<div class="row">
+	<div class="span2">autor: ${discussao.pergunta.usuario.nome }</div>
+</div>
 
-	<h2>Discussão</h2>
-	<h3>${discussao.pergunta.texto }</h3>
-	<h4>${discussao.pergunta.usuario.nome }</h4>
-	<br />
-	<br />
-	<h3>Respostas</h3>
-	<table class="table">
-		<c:forEach var="mensagem" items="${discussao.respostas }">
-			<tr>
-				<td>${mensagem.usuario.nome }</td>
-				<td>${mensagem.texto }</td>
-			</tr>
-		</c:forEach>
-	</table>
+<br />
+<br />
 
-	<h3>Responder:</h3>
-	<form method="post">
-		<input name="resposta"> <input type="submit" value="Responder">
-	</form>
+<c:forEach var="mensagem" items="${discussao.respostas }">
+	<div class="row">
+		<div class="span12">
+			<p class="resposta">${mensagem.texto }</p>
+		</div>
+		<div class="row"></div>
+		<div class="span2">
+			<p class="autor">coment�rio de: ${mensagem.usuario.nome }</p>
+			<br/>
+		</div>
+	</div>
+</c:forEach>
 
+<form method="post" action="<c:url value="/discussao/${discussao.getId()}"/>">
+	<div class="row">
+		<div class="span12">
+			<input name="resposta">
+		</div>
+	</div>
+	<div class="row">
+		<div class="span12">
+			<input type="submit" value="Responder">
+		</div>
+	</div>
+</form>
+<ul id="mensagensErroValidacao">
+	<c:forEach var="error" items="${errors}">
+		<li>${error.category} - ${error.message}</li>
+	</c:forEach>
+</ul>
 
-<%@ include file="/footer.jsp" %>
+<%@ include file="/footer.jsp"%>

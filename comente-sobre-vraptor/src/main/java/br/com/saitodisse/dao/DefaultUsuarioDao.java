@@ -25,6 +25,7 @@ public class DefaultUsuarioDao implements UsuarioDao {
 	    return (Usuario)o;		
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Usuario> pesquisarTodos() {
 	    Query queryResult = session.createQuery("from Usuario");
 	    return queryResult.list();

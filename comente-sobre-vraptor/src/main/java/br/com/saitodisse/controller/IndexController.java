@@ -1,56 +1,66 @@
 package br.com.saitodisse.controller;
 
-import static br.com.caelum.vraptor.view.Results.page;
+import java.util.List;
+
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
-import br.com.saitodisse.dao.DefaultUsuarioDao;
-import br.com.saitodisse.model.Usuario;
+import br.com.caelum.vraptor.Validator;
+import br.com.saitodisse.dao.DiscussaoDao;
+import br.com.saitodisse.dao.UsuarioDao;
+import br.com.saitodisse.model.Discussao;
 import br.com.saitodisse.model.UsuarioLogado;
-import br.com.saitodisse.model.exceptions.NomeUsuarioInvalidoException;
 
 @Resource
 public class IndexController {
 
 	private final Result _result;
 	private final UsuarioLogado _usuarioLogado;
-	private final DefaultUsuarioDao _defaultUsuarioDao;
+	private DiscussaoDao _discussaoDao;
 
-	public IndexController(Result result, UsuarioLogado usuarioLogado, DefaultUsuarioDao defaultUsuarioDao) {
+	//FIXME: os controllers precisam de testes unitários
+	public IndexController(Validator validator, Result result, UsuarioLogado usuarioLogado, UsuarioDao UsuarioDao, DiscussaoDao discussaoDao) {
 		_result = result;
 		_usuarioLogado = usuarioLogado;
-		_defaultUsuarioDao = defaultUsuarioDao;
+		_discussaoDao = discussaoDao;
 	}
 
-	@Get
 	@Path("/")
-	public void index() {
-		if(_usuarioLogado.getUsuario() != null){
-			_result.use(page()).of(IndexController.class).bemVindo();
+	public List<Discussao> index() {
+		if(_usuarioLogado.getUsuario() == null) {
+			// usuário não está logado, vai para o login
+			_result.redirectTo(UsuarioController.class).logon();
+			return null;
 		}
+		
+		// usuário logado: recebe a lista discussoes
+		_result.include("usuarioLogado", _usuarioLogado);
+		
+		return _discussaoDao.pesquisarTodas();
 	}
-
-	@Post
-	@Path("/")
-	public void index(String nome) throws NomeUsuarioInvalidoException {
-		Usuario usuario = _defaultUsuarioDao.pesquisarPorNome(nome);
-		if(usuario != null){
-			_usuarioLogado.setUsuario(usuario);
-			_result.use(page()).of(IndexController.class).bemVindo();
+	
+	@Get
+	@Path("/{tituloAmigavel}")
+	public void index(String tituloAmigavel) {
+		if(_usuarioLogado.getUsuario() == null) {
+			// usuário não está logado, vai para o login
+			_result.redirectTo(UsuarioController.class).logon();
+		}
+		
+		// usuário logado: recebe a lista discussoes
+		_result.include("usuarioLogado", _usuarioLogado);
+		
+		if(tituloAmigavel.isEmpty()){
+			_result.include("discussaoList", _discussaoDao.pesquisarTodas());
 		}
 		else{
-			// cria o novo usuário
-			usuario = new Usuario(nome);
-			_defaultUsuarioDao.salvar(usuario);
-			_usuarioLogado.setUsuario(usuario);
-			_result.redirectTo(IndexController.class).bemVindo();
+			Discussao discussaoPesquisada = _discussaoDao.pesquisarPorTituloAmigavel(tituloAmigavel);
+			if(discussaoPesquisada != null){
+				// está recebendo uma url amigável
+				_result.include("discussao", discussaoPesquisada);
+				_result.of(DiscussaoController.class).detalhe(discussaoPesquisada.getId());
+			}
 		}
 	}
-
-	public void bemVindo() {
-		_result.include("usuarioLogado", _usuarioLogado);
-	}
-
 }

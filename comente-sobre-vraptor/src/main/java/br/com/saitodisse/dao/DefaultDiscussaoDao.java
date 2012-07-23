@@ -26,37 +26,51 @@ public class DefaultDiscussaoDao implements DiscussaoDao {
 	    return (Discussao)o;		
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Discussao> pesquisarTodas() {
 	    Query queryResult = session.createQuery("from Discussao");
 	    return queryResult.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Discussao> pesquisarPerguntasPorUsuario(long usuarioId) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("from Discussao d ");
+		sb.append("select d from Discussao d ");
 		sb.append(" join d.pergunta mensagemPergunta");
 		sb.append(" join mensagemPergunta.usuario usu");
 		sb.append(" where usu.id = :usuarioId");
 		
-		String hqlQuery = sb.toString();
-		Query queryResult = session.createQuery(hqlQuery);
+		Query queryResult = session.createQuery(sb.toString());
+		queryResult.setParameter("usuarioId", usuarioId);
+		
+		return (List<Discussao>) queryResult.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Discussao> pesquisarRespostasPorUsuario(long usuarioId) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("select d from Discussao d ");
+		sb.append(" join d.respostas mensagensRespostas");
+		sb.append(" join mensagensRespostas.usuario usu");
+		sb.append(" where usu.id = :usuarioId");
+		
+		Query queryResult = session.createQuery(sb.toString());
 		queryResult.setParameter("usuarioId", usuarioId);
 		
 	    return queryResult.list();
 	}
 
-	public List<Discussao> pesquisarRespostasPorUsuario(long usuarioId) {
+	public Discussao pesquisarPorTituloAmigavel(String tituloAmigavel) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("from Discussao d ");
-		sb.append(" join d.respostas mensagensRespostas");
-		sb.append(" join mensagensRespostas.usuario usu");
-		sb.append(" where usu.id = :usuarioId");
+		sb.append("select d from Discussao d ");
+		sb.append(" join d.pergunta mensagemPergunta");
+		sb.append(" where mensagemPergunta.tituloAmigavel = :tituloAmigavel");
 		
-		String hqlQuery = sb.toString();
-		Query queryResult = session.createQuery(hqlQuery);
-		queryResult.setParameter("usuarioId", usuarioId);
+		Query queryResult = session.createQuery(sb.toString());
+		queryResult.setParameter("tituloAmigavel", tituloAmigavel);
 		
-	    return queryResult.list();
+	    Object uniqueResult = queryResult.uniqueResult();
+		return (Discussao) uniqueResult;
 	}
 
 }

@@ -26,11 +26,13 @@ public class DefaultMensagemDao implements MensagemDao {
 	    return (Mensagem)o;		
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Mensagem> pesquisarTodos() {
 	    Query queryResult = session.createQuery("from Mensagem");
 	    return queryResult.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Mensagem> pesquisarPorUsuario(long usuarioId) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("from Mensagem m ");

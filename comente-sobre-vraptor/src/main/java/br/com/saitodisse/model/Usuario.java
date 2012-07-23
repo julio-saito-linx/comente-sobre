@@ -24,6 +24,7 @@ public class Usuario {
 	
 	private String nome;
 	
+	//FIXME: isso não é seguro, o ideal seria se ter uma senha
 	public Usuario(String nome) throws NomeUsuarioInvalidoException {
 		if(nome == null || nome.isEmpty()){
 			throw new NomeUsuarioInvalidoException("O nome do usuário não pode ser vazio.");

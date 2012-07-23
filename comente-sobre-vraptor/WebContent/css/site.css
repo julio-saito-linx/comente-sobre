@@ -1,0 +1,15 @@
+#mensagensErroValidacao li{
+	color: #e00;
+	font-weight: bold; 
+}
+
+p{
+	margin-bottom: 9px;
+}
+
+.resposta{
+	font-size: 11pt;
+}
+.autor{
+	font-size: 9pt;
+}

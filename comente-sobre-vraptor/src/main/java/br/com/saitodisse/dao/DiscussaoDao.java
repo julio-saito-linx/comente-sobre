@@ -10,4 +10,5 @@ public interface DiscussaoDao {
 	List<Discussao> pesquisarTodas();
 	List<Discussao> pesquisarPerguntasPorUsuario(long usuarioId);
 	List<Discussao> pesquisarRespostasPorUsuario(long usuarioId);
+	Discussao pesquisarPorTituloAmigavel(String string);
 }

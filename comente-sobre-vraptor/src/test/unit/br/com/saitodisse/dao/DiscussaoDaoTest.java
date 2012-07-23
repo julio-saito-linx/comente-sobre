@@ -13,8 +13,6 @@ import org.junit.Test;
 import br.com.saitodisse.model.Discussao;
 import br.com.saitodisse.model.Mensagem;
 import br.com.saitodisse.model.Usuario;
-import br.com.saitodisse.model.exceptions.MensagemInvalidaException;
-import br.com.saitodisse.model.exceptions.NomeUsuarioInvalidoException;
 
 public class DiscussaoDaoTest {
 	private Session session;
@@ -25,7 +23,7 @@ public class DiscussaoDaoTest {
 	private Mensagem _mensagemInseridaUltima;
 
 	@Test
-	public void inserirPesquisar() throws Exception {
+	public void inserirPesquisar() throws Throwable {
 		Discussao discussaoInserida = new Discussao();
 
 		// 1 pergunta
@@ -43,7 +41,7 @@ public class DiscussaoDaoTest {
 	}
 
 	@Test
-	public void inserirCascade() throws Exception {
+	public void inserirCascade() throws Throwable {
 		Discussao discussaoInserida = new Discussao();
 
 		// 1 pergunta
@@ -60,21 +58,21 @@ public class DiscussaoDaoTest {
 	}
 
 	@Test
-	public void pesquisarTodas() throws Exception {
+	public void pesquisarTodas() throws Throwable {
 		salvarDiscussao(
-				"Joao", "pergunta 1",
+				"Joao", "titulo 1", "pergunta 1",
 				"Mario", "resposta 1.1",
 				"Maria", "resposta 1.2"
 				);
 
 		salvarDiscussao(
-				"Pedro", "pergunta 2",
+				"Pedro", "titulo 2", "pergunta 2",
 				"Josefina", "resposta 2.1",
 				"Gorda", "resposta 2.1"
 				);
 
 		salvarDiscussao(
-				"Fabio", "pergunta 3",
+				"Fabio", "titulo 3", "pergunta 3",
 				"Luis", "resposta 3.1",
 				"Carolina", "resposta 3.2"
 				);
@@ -83,8 +81,31 @@ public class DiscussaoDaoTest {
 		assertEquals(3, todasDiscussoes.size());
 	}
 
+	@Test
+	public void pesquisarPorTituloAmigavel() throws Throwable {
+		salvarDiscussao(
+				"Joao", "titulo 1", "pergunta 1",
+				"Mario", "resposta 1.1",
+				"Maria", "resposta 1.2"
+				);
+
+		salvarDiscussao(
+				"Pedro", "titulo 2", "pergunta 2",
+				"Josefina", "resposta 2.1",
+				"Gorda", "resposta 2.1"
+				);
+
+		salvarDiscussao(
+				"Fabio", "titulo 3", "pergunta 3",
+				"Luis", "resposta 3.1",
+				"Carolina", "resposta 3.2"
+				);
+		
+		Discussao discussao1 = dao.pesquisarPorTituloAmigavel("titulo-1");
+		assertEquals("titulo 1", discussao1.getPergunta().getTitulo());
+	}
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Throwable {
 		Configuration cfg = new Configuration();
 		cfg.configure().setProperty("hibernate.connection.url",
 				"jdbc:hsqldb:mem:comenteDb");
@@ -102,12 +123,11 @@ public class DiscussaoDaoTest {
 		}
 	}
 
-	private void salvarDiscussao(String nomePerguntador, String textoPergunta,
-			String nomeRespondedor1, String resposta1, String nomeRespondedor2,
-			String resposta2) throws NomeUsuarioInvalidoException,
-			MensagemInvalidaException {
+	private void salvarDiscussao(String nomePerguntador, String tituloPergunta,
+			String textoPergunta, String nomeRespondedor1, String resposta1, 
+			String nomeRespondedor2, String resposta2) throws Throwable {
 		Discussao _discussaoInserida = new Discussao();
-		getMensagemComUsuario(nomePerguntador, textoPergunta);
+		getMensagemComUsuario(nomePerguntador, tituloPergunta, textoPergunta);
 
 		// 1 pergunta
 		_discussaoInserida.setPergunta(_mensagemInseridaUltima);
@@ -123,12 +143,20 @@ public class DiscussaoDaoTest {
 	}
 
 	private void getMensagemComUsuario(String nomeUsuario, String textoMensagem)
-			throws NomeUsuarioInvalidoException, MensagemInvalidaException {
+			throws Throwable {
+
+		getMensagemComUsuario(nomeUsuario, "", textoMensagem);
+	}
+
+	private void getMensagemComUsuario(String nomeUsuario,
+			String tituloPergunta, String textoMensagem) 
+					throws Throwable {
+
 		_usuarioInseridoUltimo = new Usuario(nomeUsuario);
 		daoUsuario = new DefaultUsuarioDao(session);
 		daoUsuario.salvar(_usuarioInseridoUltimo);
 
-		_mensagemInseridaUltima = new Mensagem(textoMensagem,
+		_mensagemInseridaUltima = new Mensagem(tituloPergunta, textoMensagem,
 				_usuarioInseridoUltimo);
 		daoMensagem = new DefaultMensagemDao(session);
 		daoMensagem.salvar(_mensagemInseridaUltima);
