@@ -38,6 +38,8 @@
           <a class="brand" href="<c:url value="/"/>">comente-sobre</a>
           <div class="nav-collapse">
             <ul class="nav">
+
+              <li>               <a href="javascript: void(null)">bem vindo: ${usuarioLogado.usuario.nome }</a></li>
               <li>               <a href="<c:url value="/usuario/logout"/>">Sair</a></li>
             </ul>
           </div><!--/.nav-collapse -->

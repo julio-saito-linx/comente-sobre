@@ -1,8 +1,19 @@
 <%@ include file="/header.jsp"%>
 
+<img src="<c:url value="/img/comente-sobre-logo.png"/>">
 
-<h1>Bem vindo, ${usuarioLogado.usuario.nome }!</h1>
 <br />
+<br />
+<h2>Discussões anteriores:</h2>
+<ul id="listaIndexDiscussoes">
+	<c:forEach var="disc" items="${discussaoList }">
+		<li><a
+			href="<c:url value="/${disc.getPergunta().getTituloAmigavel()}"/>">${disc.pergunta.texto
+				}</a> [ autor: ${disc.pergunta.usuario.nome } - ${disc.getRespostas().size() } respostas ]</li>
+	</c:forEach>
+</ul>
+<br />
+<h2>Iniciar nova discussão:</h2>
 <form method="post" action="<c:url value="/discussao/novaPergunta"/>">
 	<div class="row">
 		<div class="span1" style="text-align: right;">titulo:</div>
@@ -11,14 +22,14 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="span1" style="text-align: right;">detalhes:</div>
+		<div class="span1" style="text-align: right;">descrição:</div>
 		<div class="span10">
 			<textarea name="texto" cols="80" rows="4"></textarea>
 		</div>
 	</div>
 	<div class="row">
 		<div class="offset1 span2">
-			<input type="submit" value="Iniciar nova discussão">
+			<input type="submit" value="Gravar">
 		</div>
 	</div>
 </form>
@@ -26,14 +37,6 @@
 <ul id="mensagensErroValidacao">
 	<c:forEach var="error" items="${errors}">
 		<li>${error.category} - ${error.message}</li>
-	</c:forEach>
-</ul>
-<br>
-<h2>Ultimas discussões:</h2>
-<ul>
-	<c:forEach var="disc" items="${discussaoList }">
-		<li><a href="<c:url value="/discussao/${disc.id}"/>">${disc.pergunta.texto
-				}</a> <span>(${disc.pergunta.usuario.nome })</span></li>
 	</c:forEach>
 </ul>
 

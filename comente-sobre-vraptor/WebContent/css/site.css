@@ -13,3 +13,11 @@ p{
 .autor{
 	font-size: 9pt;
 }
+#listaIndexDiscussoes{
+	margin: 9px;
+}
+
+#listaIndexDiscussoes li{
+	margin-bottom: 9px;
+	font-size: 11pt;
+}
